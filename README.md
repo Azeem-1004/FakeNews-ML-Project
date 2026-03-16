@@ -129,8 +129,7 @@ This file will be used in the **next phase of the project**, where machine learn
 ```
 FakeNews-ML-Project
 │
-├── fake_news_analysis.ipynb
-├── processed_fake_news_dataset.csv
+├── true-and-fake-news-dataset.ipynb
 └── README.md
 ```
 
