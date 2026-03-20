@@ -1,125 +1,177 @@
-# Fake News Detection – Machine Learning Project (Phase 2)
+# Fake News Detection – Machine Learning Project (Phase 2 & Phase 3)
 
 ## Project Overview
 
-This project focuses on analyzing and preprocessing a fake news dataset in order to prepare it for machine learning models. The goal is to explore patterns in news articles and apply text preprocessing techniques that will help in building an accurate fake news detection system.
+This project focuses on analyzing, preprocessing, and performing feature engineering on a fake news dataset to prepare it for machine learning models. The goal is to understand patterns in news articles and improve model performance through effective feature extraction and engineering techniques.
 
-The dataset contains both **real and fake news articles**, and the task is to understand the structure of the data, visualize important features, and clean the textual data before using it in machine learning models.
+The dataset contains both **real and fake news articles**, and the project involves transforming raw text into meaningful features for classification.
 
 ---
 
 ## Project Objectives
 
-The main objectives of this project are:
+* Analyze and visualize the dataset
+* Apply text preprocessing techniques
+* Perform feature engineering
+* Identify important features using multiple machine learning algorithms
+* Evaluate the impact of new features on model performance
 
-* To analyze the dataset using statistical methods.
-* To visualize different features of the dataset for better understanding.
-* To apply text preprocessing techniques to clean the data.
-* To prepare the dataset for future machine learning model training.
+### Research Questions
 
-The project also aims to answer the following questions:
-
-1. How accurately can machine learning models detect fake news articles using textual features such as titles and article content?
-2. How do different text preprocessing techniques affect the performance of fake news detection models?
+1. How accurately can machine learning models detect fake news using textual features?
+2. How do preprocessing and feature engineering techniques affect model performance?
 
 ---
 
 ## Dataset Description
 
-The dataset was obtained from Kaggle and contains two CSV files:
+The dataset was obtained from Kaggle and contains:
 
-* **True.csv** – Contains real news articles
-* **Fake.csv** – Contains fake news articles
+* **True.csv** – Real news articles
+* **Fake.csv** – Fake news articles
 
-Both datasets include the following features:
+### Features:
 
-* **title** – Headline of the news article
-* **text** – Full content of the news article
-* **subject** – Category of the news
-* **date** – Date the article was published
+* **title** – News headline
+* **text** – Article content
+* **subject** – News category
+* **date** – Publication date
 
-A new column **label** was added during preprocessing:
+A new column **label** was added:
 
 * **1 = True News**
 * **0 = Fake News**
 
-After labeling, both datasets were merged to create a single dataset containing **44,898 news articles**.
+The final dataset contains **44,898 articles**.
 
 ---
 
-## Data Analysis and Visualization
+# Phase 2 — Data Analysis & Preprocessing
 
-Several statistical and visual analyses were performed to understand the dataset.
+## Statistical Analysis
 
-### Statistical Analysis
+* Checked dataset structure using `info()`
+* Generated summary statistics using `describe()`
+* Verified missing values (none found)
+* Analyzed class distribution (balanced dataset)
 
-The following checks were performed:
+## Visual Analysis
 
-* Dataset structure using `info()`
-* Statistical summary using `describe()`
-* Missing value analysis
-* Class distribution of fake vs real news
+The following visualizations were created:
 
-The dataset was found to contain **no missing values** and the classes are relatively balanced.
+* Distribution of fake vs real news
+* Subject distribution
+* Article text length distribution
+* Title length distribution
 
-### Visual Analysis
-
-Different visualizations were created to understand the data better:
-
-* Distribution of fake vs real news articles
-* Distribution of news subjects
-* Distribution of article text length
-* Distribution of news title length
-
-These visualizations helped identify patterns in article structure and dataset composition.
+These helped in understanding dataset patterns and structure.
 
 ---
 
 ## Data Preprocessing
 
-To prepare the dataset for machine learning models, several preprocessing steps were applied:
+The following preprocessing steps were applied:
 
-1. **Convert text to lowercase**
-   Ensures consistency so that words like "News" and "news" are treated the same.
+1. **Lowercasing text**
+2. **Removing punctuation and special characters**
+3. **Removing stopwords**
+4. **Combining title and text into a single column (content)**
+5. **Dropping unnecessary columns**
 
-2. **Remove punctuation and special characters**
-   Cleans the text by removing symbols that do not contribute to meaningful analysis.
-
-3. **Remove stopwords**
-   Common words such as "the", "is", and "and" were removed to reduce noise.
-
-4. **Combine title and text columns**
-   The title and article content were merged into a single feature called **content** to improve text analysis.
-
-5. **Remove unnecessary columns**
-   Columns used only for visualization were removed to keep the dataset clean.
+The processed dataset was saved for future use.
 
 ---
 
-## Final Processed Dataset
+# Phase 3 — Feature Engineering
 
-The final dataset contains the following columns:
+## TF-IDF Feature Extraction
 
-* **subject** – News category
-* **label** – Target variable (Fake or Real)
-* **content** – Combined news title and article text
+Text data was converted into numerical features using **TF-IDF**, generating 5000 features for model input.
 
-The processed dataset was saved as:
+---
 
-`processed_fake_news_dataset.csv`
+## Feature Importance Analysis
 
-This file will be used in the **next phase of the project**, where machine learning models will be trained and evaluated.
+Five different algorithms were used to identify important features:
+
+* Random Forest
+* Decision Tree
+* Extra Trees
+* Logistic Regression
+* LightGBM
+
+### Key Findings:
+
+* Words like **"reuters", "said", "washington"** are strong indicators of real news
+* Words like **"video", "just", "image"** are more common in fake news
+* Decision Tree showed overfitting (relying on one feature)
+* Ensemble methods (Random Forest, Extra Trees, LightGBM) provided more reliable results
+
+---
+
+## Feature Engineering
+
+New features were created to enhance model performance:
+
+* **content_length** – Length of article
+* **word_count** – Number of words
+* **uppercase_ratio** – Ratio of uppercase words
+
+These features capture structural and stylistic differences in news articles.
+
+---
+
+## Feature Evaluation
+
+The new features were evaluated using **LightGBM**:
+
+* TF-IDF already provided very high accuracy
+* New features resulted in a **small but positive improvement**
+
+This shows that additional features provide extra contextual information.
+
+---
+
+## K-Means Clustering
+
+K-Means clustering was applied to create a new feature:
+
+* Articles were grouped into **5 clusters**
+* Cluster labels were added as a feature
+
+This helps capture hidden patterns in the dataset.
+
+---
+
+## Standardization
+
+Numerical features were standardized using **StandardScaler** to ensure consistent scaling across features.
+
+---
+
+## Final Dataset
+
+The final dataset includes:
+
+* **content** – Processed text
+* **subject** – Category
+* **label** – Target variable
+* **engineered features** (length, word count, uppercase ratio)
+* **cluster feature**
+
+Saved as:
+
+`final_feature_engineered_dataset.csv`
 
 ---
 
 ## Technologies Used
 
 * Python
-* Pandas
-* NumPy
-* Matplotlib
-* Seaborn
+* Pandas, NumPy
+* Matplotlib, Seaborn
 * Scikit-learn
+* LightGBM
 * Kaggle Notebook
 
 ---
@@ -135,9 +187,17 @@ FakeNews-ML-Project
 
 ---
 
+## Conclusion
+
+This project demonstrates how preprocessing and feature engineering significantly improve the quality of data for machine learning tasks. While TF-IDF features were highly effective, additional engineered features and clustering provided further insights.
+
+Overall, feature engineering played a crucial role in enhancing the dataset for fake news detection.
+
+---
+
 ## Future Work
 
-In the next phase of this project, machine learning models will be developed to classify news articles as **fake or real**. Different feature extraction techniques and classification algorithms will be tested to evaluate their accuracy and performance.
+In the next phase, machine learning models will be trained and evaluated using the engineered dataset to build an accurate fake news detection system.
 
 ---
 
